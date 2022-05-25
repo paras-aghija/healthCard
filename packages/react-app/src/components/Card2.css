@@ -1,0 +1,32 @@
+  
+  .card-wrapper{
+      text-align: start;
+    background: rgba( 0, 0, 0, 0.25 );
+  box-shadow: 0 16px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 10px );
+  -webkit-backdrop-filter: blur( 10px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+    width: 600px;
+  }
+  
+  .card-header{
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid white;
+  }
+  
+  .card-content{
+    color: white;
+    padding: 16px 32px 0 32px;
+  }
+  
+  .sub-content{
+    display: flex;
+  }
+  
+  .sub-2{
+    padding: 16px 32px 16px 32px;
+  }

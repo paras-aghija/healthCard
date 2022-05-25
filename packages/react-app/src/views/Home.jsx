@@ -1,7 +1,9 @@
+import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switch } from "antd";
 import { useContractReader } from "eth-hooks";
 import { ethers } from "ethers";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Card2 from "../components/Card2";
 
 /**
  * web3 props can be passed from '../App.jsx' into your local view component for use
@@ -9,113 +11,152 @@ import { Link } from "react-router-dom";
  * @param {*} readContracts contracts from current chain already pre-loaded using ethers contract module. More here https://docs.ethers.io/v5/api/contract/contract/
  * @returns react component
  **/
-function Home({ yourLocalBalance, readContracts }) {
+function Home({
+  purpose,
+  address,
+  mainnetProvider,
+  localProvider,
+  yourLocalBalance,
+  price,
+  tx,
+  readContracts,
+  writeContracts,
+}) {
   // you can also use hooks locally in your component of choice
   // in this case, let's keep track of 'purpose' variable from our contract
-  const purpose = useContractReader(readContracts, "YourContract", "purpose");
+  // const purpose = useContractReader(readContracts, "YourContract", "purpose");
+  const [newPurpose, setNewPurpose] = useState("loading...");
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [add, setAdd] = useState("");
+  const [age, setAge] = useState("");
+  const [bloodGroup, setBloodGroup] = useState("");
+  const [data, setData] = useState(null);
+
+  console.log(name);
+  console.log(email);
 
   return (
-    <div>
-      <div style={{ margin: 32 }}>
-        <span style={{ marginRight: 8 }}>📝</span>
-        This Is Your App Home. You can start editing it in{" "}
-        <span
-          className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
-        >
-          packages/react-app/src/views/Home.jsx
-        </span>
-      </div>
-      <div style={{ margin: 32 }}>
-        <span style={{ marginRight: 8 }}>✏️</span>
-        Edit your smart contract{" "}
-        <span
-          className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
-        >
-          YourContract.sol
-        </span>{" "}
-        in{" "}
-        <span
-          className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
-        >
-          packages/hardhat/contracts
-        </span>
-      </div>
-      {!purpose ? (
-        <div style={{ margin: 32 }}>
-          <span style={{ marginRight: 8 }}>👷‍♀️</span>
-          You haven't deployed your contract yet, run
-          <span
-            className="highlight"
-            style={{
-              marginLeft: 4,
-              /* backgroundColor: "#f9f9f9", */ padding: 4,
-              borderRadius: 4,
-              fontWeight: "bolder",
-            }}
-          >
-            yarn chain
-          </span>{" "}
-          and{" "}
-          <span
-            className="highlight"
-            style={{
-              marginLeft: 4,
-              /* backgroundColor: "#f9f9f9", */ padding: 4,
-              borderRadius: 4,
-              fontWeight: "bolder",
-            }}
-          >
-            yarn deploy
-          </span>{" "}
-          to deploy your first contract!
-        </div>
-      ) : (
-        <div style={{ margin: 32 }}>
-          <span style={{ marginRight: 8 }}>🤓</span>
-          The "purpose" variable from your contract is{" "}
-          <span
-            className="highlight"
-            style={{
-              marginLeft: 4,
-              /* backgroundColor: "#f9f9f9", */ padding: 4,
-              borderRadius: 4,
-              fontWeight: "bolder",
-            }}
-          >
-            {purpose}
-          </span>
-        </div>
-      )}
+    <div style={{ padding: 32 }}>
+      <h1>Register For Health Card</h1>
 
-      <div style={{ margin: 32 }}>
-        <span style={{ marginRight: 8 }}>🤖</span>
-        An example prop of your balance{" "}
-        <span style={{ fontWeight: "bold", color: "green" }}>({ethers.utils.formatEther(yourLocalBalance)})</span> was
-        passed into the
-        <span
-          className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
-        >
-          Home.jsx
-        </span>{" "}
-        component from
-        <span
-          className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
-        >
-          App.jsx
-        </span>
-      </div>
-      <div style={{ margin: 32 }}>
-        <span style={{ marginRight: 8 }}>💭</span>
-        Check out the <Link to="/hints">"Hints"</Link> tab for more tips.
-      </div>
-      <div style={{ margin: 32 }}>
-        <span style={{ marginRight: 8 }}>🛠</span>
-        Tinker with your smart contract using the <Link to="/debug">"Debug Contract"</Link> tab.
+      <div
+        style={{
+          padding: 16,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ margin: 8 }}>
+          <Input
+            style={{ width: 400, margin: 16 }}
+            placeholder={"Name"}
+            onChange={e => {
+              setName(e.target.value);
+            }}
+          />
+          <Input
+            style={{ width: 400, margin: 16 }}
+            placeholder={"Email"}
+            onChange={e => {
+              setEmail(e.target.value);
+            }}
+          />
+          <Input
+            style={{ width: 400, margin: 16 }}
+            placeholder={"Phone"}
+            onChange={e => {
+              setPhone(e.target.value);
+            }}
+          />
+          <Input
+            style={{ width: 400, margin: 16 }}
+            placeholder={"Address"}
+            onChange={e => {
+              setAdd(e.target.value);
+            }}
+          />
+          <Input
+            style={{ width: 400, margin: 16 }}
+            placeholder={"Age"}
+            onChange={e => {
+              setAge(e.target.value);
+            }}
+          />
+          <Input
+            style={{ width: 400, margin: 16 }}
+            placeholder={"Blood Group"}
+            onChange={e => {
+              setBloodGroup(e.target.value);
+            }}
+          />
+          <br />
+          <Button
+            style={{ marginTop: 8 }}
+            onClick={async () => {
+              /* look how you call setPurpose on your contract: */
+              /* notice how you pass a call back for tx updates too */
+              const result = tx(
+                writeContracts.YourContract.addPatient(name, email, phone, age, bloodGroup, add),
+                update => {
+                  console.log("📡 Transaction Update:", update);
+                  if (update && (update.status === "confirmed" || update.status === 1)) {
+                    console.log(" 🍾 Transaction " + update.hash + " finished!");
+                    console.log(
+                      " ⛽️ " +
+                        update.gasUsed +
+                        "/" +
+                        (update.gasLimit || update.gas) +
+                        " @ " +
+                        parseFloat(update.gasPrice) / 1000000000 +
+                        " gwei",
+                    );
+                  }
+                },
+              );
+              console.log("awaiting metamask/web3 confirm result...", result);
+              console.log(await result);
+            }}
+          >
+            Register Health Card
+          </Button>
+        </div>
+        <Divider />
+        <h1>Get your Health Card</h1>
+        <div style={{ margin: 8 }}>
+          <Button
+            onClick={async () => {
+              const result = await readContracts["YourContract"].patients(address);
+              setData(result);
+              console.log(result);
+            }}
+          >
+            Get Card
+          </Button>
+        </div>
+        <Card2 data={data} address={address} />
+
+        {/* {data && data.name === "" ? (
+          <h1>Please Generate your healthcard</h1>
+        ) : (
+          <div style={{ margin: 16 }}>
+            <Card title={`${address}`}>
+              <h1>{data?.name}</h1>
+              <li>
+                Blood Group: {data?.bloodgrp} &emsp;&emsp;&emsp; Age: {data?.age}
+              </li>
+              <li>
+                Email: {data?.email} &emsp;&emsp;&emsp; Phone {data?.phone}
+              </li>
+              <li></li>
+              <li>Address: {data?.add}</li>
+            </Card>
+          </div>
+        )} */}
       </div>
     </div>
   );
